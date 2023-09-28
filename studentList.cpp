@@ -1,18 +1,24 @@
+//Neel Madala
+//9/28/2023
+//Cited from Nathan Zou
+//This program allows the user to input student information(name, Id, GPA) and print out all saved students and delete certain students based on id.
 #include<iostream>
 #include<vector>
 #include<iomanip>
 using namespace std;
 
-struct student{
+struct student{ //A student variable that holds student information. Acts like any other variable
   char first_name[20];
   char last_name[20];
   int studentID;
   float gpa;
 };
-
+//Intialize the functions to allow both to be used whenever
 void DELETE(int id, vector<student*>* studentList);
 void PRINT(vector<student*>* studentList);
-student* ADD() {
+
+
+student* ADD() {//A function to ask for a new student's information
   student* ns = new student();
   cout << "Enter first name: " << endl;
   cin >> ns -> first_name;
@@ -24,7 +30,7 @@ student* ADD() {
   cin >> ns -> gpa;
   return ns;
 }
-void PRINT(vector<student*>* studentList) {
+void PRINT(vector<student*>* studentList) {//Prints out all the students
   vector<student*>::iterator print;
   for (print = studentList->begin(); print != studentList->end(); print++) {
     cout << (*print)->first_name << ", ";
@@ -34,7 +40,7 @@ void PRINT(vector<student*>* studentList) {
     cout << endl;
   }
 }
-void DELETE(int id, vector<student*>* studentList) {
+void DELETE(int id, vector<student*>* studentList) {//Takes in a pointer to the list of student pointers and runs through the list of student pointers until you find the id inputted
   vector<student*> :: iterator del;
   for (del = studentList->begin(); del != studentList->end(); del++) {
     if ((*del)->studentID == id) {
@@ -57,42 +63,42 @@ int main() {
   while (running == true) {
     cout << "ADD, PRINT, DELETE, QUIT" << endl;
     cin >> command;
-    if (command[0] == 'A' && command[1] == 'D' && command[2] == 'D') {
+    if (command[0] == 'A' && command[1] == 'D' && command[2] == 'D') {//Pushes the user to add a new student to the end of the list
       cout << "Adding a new student: " << endl;
       studentList->push_back(ADD());
     }
-    else if (command[0] == 'P' && command[1] == 'R' && command[2] == 'I' && command[3] == 'N' && command[4] == 'T') {
+    else if (command[0] == 'P' && command[1] == 'R' && command[2] == 'I' && command[3] == 'N' && command[4] == 'T') {//Prints out all the students stored in the list
       cout << "Printing the Student List: " << endl;
       PRINT(studentList);
     }
-    else if (command[0] == 'D' && command[1] == 'E' && command[2] == 'L' && command[3] == 'E' && command[4] == 'T' && command[5] == 'E') {
+    else if (command[0] == 'D' && command[1] == 'E' && command[2] == 'L' && command[3] == 'E' && command[4] == 'T' && command[5] == 'E') { //Delete's a student after making sure and from the ID of that student
       char delCheck;
       cout << "You are about to delete a student. Are you sure? (y/n)";
       cin >> delCheck;
       bool deleteChecking = true;
       while (deleteChecking == true) {
-	if (delCheck == 'y' || delCheck == 'Y') {
+	if (delCheck == 'y' || delCheck == 'Y') {//making sure you want to delete a student
 	  cout << "Deleting Student." <<endl;
 	  deleteChecking = false;
 	  cout <<"Enter the student ID you want to delete: " << endl;
 	  int IDdel;
-	  cin >> IDdel;
+	  cin >> IDdel;//Takes in a studentID
 	  DELETE(IDdel, studentList);
 	}
-	else if (delCheck == 'n' || delCheck == 'N') {
+	else if (delCheck == 'n' || delCheck == 'N') {//goes back to main menu if you don't want to delete
 	  cout << "Back to main menu " << endl;
 	  deleteChecking = false;
 	}
-	else{
+	else{//Invalid Input fail safe
 	  cout << "Invalid input. Please input a 'y' or 'n'" << endl;
 	}
       }
     }
-    else if (command[0] == 'Q' && command[1] == 'U' && command[2] == 'I' && command[3] == 'T') {
+    else if (command[0] == 'Q' && command[1] == 'U' && command[2] == 'I' && command[3] == 'T') { //Ends the program
       cout << "Quitting program" << endl;
       running = false;
     }
-    else {
+    else {//invalid input fail safe
       cout << "Invalid Input. Type a valid Command in Capitals." << endl;
     }
 
